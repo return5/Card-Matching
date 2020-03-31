@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #compile script for cards
 #compiles cards and creates executable named 'cards'
 #defaults to using gcc, but uses clang if user supplies '-c' or '--clang' as argument to script. 
@@ -6,24 +6,24 @@
 
 #prints the help message to terminal.
 printHelp() {
-	printf "compile script for cards\n"
-	printf "compiles rogie_clone and creates executable names 'cards'\n"
-	printf "defaults to using gcc, but uses clang if user supplies '-c' to script.\n\n"
-	printf "options:\n"
-	printf " -c   --clang 	use clang instead of gcc\n"
-	printf "-help  --help 	prints this page then exits\n"
+    printf "%s\n" "compile script for cards"
+    printf "%s\n" "compiles cards and creates executable names 'cards'"
+    printf "%s\n\n" "defaults to using gcc, but uses clang if user supplies '-c' to script."
+    printf "%s\n\t" "options:"
+    printf "%s\n\t" "-c   --clang   use clang instead of gcc"
+    printf "%s\n" "-help  --help   prints this page then exits"
 }
 
 #use GCC to compile the game
 useGCC() {
-	printf "using GCC\n"
-	gcc cards.c -orogueclone -Wall -Wextra -O2 -finline-functions -Wswitch-enum -lncurses -std=gnu11 -ocards
+    printf "%s\n" "using GCC"
+    gcc -orogueclone -Wall -Wextra -O2 -Iheaders -finline-functions -Wswitch-enum -lncurses -std=gnu11 -ocards
 }
 
 #compiles game using Clang
 useClang() {
-	printf "using Clang\n"
-	clang cards.c -Wall -Wextra -O2 -lncurses -finline-functions -Wswitch-enum -std=gnu11 -ocards   
+    printf "%s\n" "using Clang"
+    clang -Iheaders -Wall -Wextra -O2 -lncurses -finline-functions -Wswitch-enum -std=gnu11 -ocards   
 }
 
 main() {
@@ -33,11 +33,11 @@ main() {
             ;;
         -c | --clang)           #if argument passed is the clang flag
             #check if clang is installed, if it is, call the useClang function, other wise fallback to GCC
-            (clang -v >/dev/null 2>&1 && useClang) || (printf "falling back to GCC.\n" && (gcc -v >/dev/null 2>&1 && useGCC) || printf "error, make sure GCC is installed.\n")   
+            (clang -v >/dev/null 2>&1 && useClang) || (printf "%s\n" "falling back to GCC." && (gcc -v >/dev/null 2>&1 && useGCC || printf "error, make sure GCC is installed.\n"))   
             ;;
         *)
             #checks to see if gcc is installed, and if so call useGCC, otherwise print error
-            (gcc -v >/dev/null 2>&1 && useGCC) || printf "error, make sure GCC is installed.\n"
+            (gcc -v >/dev/null 2>&1 && useGCC) || printf "%S\n" "error, make sure GCC is installed."
             ;;
     esac
 }
