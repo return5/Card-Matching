@@ -17,13 +17,13 @@ printHelp() {
 #use GCC to compile the game
 useGCC() {
     printf "%s\n" "using GCC"
-    gcc -Wall -Wextra -O2 -Iheaders -finline-functions -Wswitch-enum -lncurses -std=gnu11 -ocards
+    gcc cards.c -Wall -Wextra -O2 -Wswitch-enum -finline-functions -lncurses -std=gnu11 -ocards
 }
 
 #compiles game using Clang
 useClang() {
     printf "%s\n" "using Clang"
-    clang -Iheaders -Wall -Wextra -O2 -lncurses -finline-functions -Wswitch-enum -std=gnu11 -ocards   
+    clang cards.c -Wall -Wextra -O2 -lncurses -finline-functions -Wswitch-enum -std=gnu11 -ocards   
 }
 
 main() {
@@ -37,7 +37,7 @@ main() {
             ;;
         *)
             #checks to see if gcc is installed, and if so call useGCC, otherwise print error
-            (gcc -v >/dev/null 2>&1 && useGCC) || printf "%S\n" "error, make sure GCC is installed."
+            (gcc -v >/dev/null 2>&1 && useGCC) || printf "%s\n" "error, make sure GCC is installed."
             ;;
     esac
 }

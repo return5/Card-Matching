@@ -10,6 +10,7 @@
 #include <string.h> //strncpy
 #include <time.h> //time()
 #include <unistd.h>//sleep() 
+
 /*----------------------------------------- enums and typedefs -----------------------------------*/
 
 enum Suites{Clubs=1,Spades=2,Diamonds=3,Hearts=4};
@@ -133,10 +134,10 @@ void printCard(const int index) {
 
 //swap face value and blank side to show/hide card when needed.
 void swapFace(const int index) {
-	char temp[3];
-	strncpy(temp,deck[index]->face,3); //currently showing side saved to temp
-	strncpy(deck[index]->face,deck[index]->alt_face,3); //currently showing side changed to other side
-	strncpy(deck[index]->alt_face,temp,3); //previous side saved to alt_face
+	char temp[4];
+	strncpy(temp,deck[index]->face,4); //currently showing side saved to temp
+	strncpy(deck[index]->face,deck[index]->alt_face,4); //currently showing side changed to other side
+	strncpy(deck[index]->alt_face,temp,4); //previous side saved to alt_face
 }
 
 //if mouse clicked on card, return the index for that card to save in choices array located in 'gameloop' function
@@ -192,11 +193,11 @@ enum Suites getSuite(const int value) {
 
 //get face value for card adn return it
 char *getFace(const int value) {
-	char *c = malloc(3);
+	char *c = malloc(4);
 	switch(value) { 
 		case 1: return "A"; 	
 		case 2 ... 10: 
-			snprintf(c,3,"%d",value); //convert integet to string and store it inside c
+			snprintf(c,4,"%d",value); //convert integet to string and store it inside c
 		    return c; 	
 		case 11: return "J";
 		case 12: return "Q";
@@ -217,13 +218,13 @@ void freeTemp(card **const temp) {
 //make a card for deck copying values from temp
 card* makeCard(const int index, card **const temp) {
 	card *new = malloc(SIZE_CARD);
-	new->face = malloc(3);
-	new->alt_face = malloc(3);
+	new->face = malloc(4);
+	new->alt_face = malloc(4);
 	new->value = temp[index]->value;
 	new->matched = NO;
 	new->suite = temp[index]->suite;
-	strncpy(new->face,temp[index]->face,3);  //copy face value
-	strncpy(new->alt_face,temp[index]->alt_face,3); //copy alt_face value
+	strncpy(new->face,temp[index]->face,4);  //copy face value
+	strncpy(new->alt_face,temp[index]->alt_face,4); //copy alt_face value
 	return new;
 }
 
@@ -262,10 +263,10 @@ void initDeck(void) {
 	for(int i = 0; i < 10; i++) { 
 		temp[i] = malloc(SIZE_CARD);	
 		temp[i]->value = (random() % 13) +1; //random int between 1 and 13
-		temp[i]->alt_face = malloc(3);
-		temp[i]->face = malloc(3);
-		snprintf(temp[i]->face,3,getFace(temp[i]->value));
-		snprintf(temp[i]->alt_face,3," ");		
+		temp[i]->alt_face = malloc(4);
+		temp[i]->face = malloc(4);
+		snprintf(temp[i]->face,4,getFace(temp[i]->value));
+		snprintf(temp[i]->alt_face,4," ");		
 		temp[i]->suite = getSuite((random()%4)+1); //call getSuite with a random int between 1 and 4
 		temp[i]->matched = NO;
 	}
@@ -342,7 +343,7 @@ void showFaces(void) {
 void runLoop(void) {
 	int c,i;
 	int choices [2]; //holds index of two cards user is trying to match
-	i = 0; //index for choices
+	c = i = 0; //index for choices
 	start_time = time(0); //time when user starts to play
 	while(c != 'q') {
 		checkInput((c = getch()), &i,choices); //check user input
