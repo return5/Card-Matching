@@ -6,4 +6,4 @@ game starts with showing all the cards for 10 seconds then flips them over. the 
 try to match two cards with the same face value and same color. when all cards are matched you win the game.  you can quit the game anytime by pressing 'q'.
 
 
- ![screenshot1](/screenshots/Screenshot_3.png)
+ ![screenshot1](/Screenshot_3.png)
