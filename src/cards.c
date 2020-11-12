@@ -197,7 +197,7 @@ char *getFace(const int value) {
 	switch(value) { 
 		case 1: return "A"; 	
 		case 2 ... 10: 
-			snprintf(c,4,"%d",value); //convert integet to string and store it inside c
+			snprintf(c,sizeof(int),"%d",value); //convert integet to string and store it inside c
 		    return c; 	
 		case 11: return "J";
 		case 12: return "Q";
